@@ -241,8 +241,9 @@ func (c *P4rtClient) ReadReqEntities(entities []*p4.Entity) (*p4.ReadResponse, e
 	log.Traceln(proto.MarshalTextString(req))
 
 	readClient, err := c.client.Read(context.Background(), req)
+	var readRes *p4.ReadResponse
 	if err == nil {
-		readRes, err := readClient.Recv()
+		readRes, err = readClient.Recv()
 		if err == nil {
 			log.Traceln(proto.MarshalTextString(readRes))
 			return readRes, nil
@@ -265,8 +266,9 @@ func (c *P4rtClient) ReadReq(entity *p4.Entity) (*p4.ReadResponse, error) {
 	log.Traceln(proto.MarshalTextString(&req))
 
 	readClient, err := c.client.Read(ctx, &req)
+	var readRes *p4.ReadResponse
 	if err == nil {
-		readRes, err := readClient.Recv()
+		readRes, err = readClient.Recv()
 		if err == nil {
 			log.Traceln(proto.MarshalTextString(readRes))
 			return readRes, nil
@@ -589,7 +591,7 @@ func CreateChannel(host string, deviceID uint64) (*P4rtClient, error) {
 
 	closeStreamOnError := func() {
 		if client.stream != nil {
-			err := client.stream.CloseSend()
+			err = client.stream.CloseSend()
 			if err != nil {
 				log.Errorf("Failed to close P4Rt stream with %v: %v", client.conn.Target(), err)
 			}

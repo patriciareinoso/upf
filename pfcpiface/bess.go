@@ -738,7 +738,8 @@ func (b *bess) clearState() {
 	clearGtpuPathMonitoringCmd := &pb.GtpuPathMonitoringCommandClearArg{}
 
 	if enableGtpuPathMonitoring {
-		anyGtpuPathMonitoringClear, err := anypb.New(clearGtpuPathMonitoringCmd)
+		var anyGtpuPathMonitoringClear *anypb.Any
+		anyGtpuPathMonitoringClear, err = anypb.New(clearGtpuPathMonitoringCmd)
 		if err != nil {
 			log.Errorf("Error marshalling the rule %v: %v", anyGtpuPathMonitoringClear, err)
 			return
